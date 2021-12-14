@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
@@ -9,6 +7,10 @@ namespace AspNetCoreWebAppStartup
 {
     public class HostedService : IHostedService
     {
+        public HostedService()
+        {
+            Console.WriteLine("HostedService.ctor");
+        }
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             Console.WriteLine("HostedService.StartAsync: await Task.Delay(TimeSpan.FromSeconds(1));");

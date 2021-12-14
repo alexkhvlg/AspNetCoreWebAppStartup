@@ -4,8 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace AspNetCoreWebAppStartup
@@ -25,6 +23,9 @@ namespace AspNetCoreWebAppStartup
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            Console.WriteLine("Startup.ConfigureServices: services.AddSingleton<SingletonClass>();");
+            services.AddSingleton<SingletonClass>();
+
             Console.WriteLine("Startup.ConfigureServices: services.AddHostedService<HostedService>();");
             services.AddHostedService<HostedService>();
 
@@ -66,8 +67,20 @@ namespace AspNetCoreWebAppStartup
                 endpoints.MapRazorPages();
             });
 
-            Console.WriteLine("Startup.Configure: InitAfterConfigure().GetAwaiter().GetResult();");
-            InitAfterConfigure().GetAwaiter().GetResult();
+            //Console.WriteLine("Startup.Configure: app.ApplicationServices.GetService<SingletonClass>();");
+            //app.ApplicationServices.GetService<SingletonClass>();
+
+            Console.WriteLine("Startup.Configure: StaticClass.MethodTwo();");
+            StaticClass.MethodTwo();
+
+            Console.WriteLine("Startup.Configure: var initAfterConfigure = InitAfterConfigure();");
+            var initAfterConfigure = InitAfterConfigure();
+
+            Console.WriteLine("Startup.Configure: var taskAwaiter = initAfterConfigure.GetAwaiter();");
+            var taskAwaiter = initAfterConfigure.GetAwaiter();
+
+            Console.WriteLine("taskAwaiter.GetResult();");
+            taskAwaiter.GetResult();
 
             Console.WriteLine("Startup.Configure: __exit__");
         }
